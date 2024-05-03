@@ -21,9 +21,9 @@ node_compat = true
 
 # Bind a Queue producer. Use this binding to schedule an arbitrary task that may be processed later by a Queue consumer.
 # Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#queues
-# [[queues.producers]]
-# binding = "EMAIL_ENROLLMENT_QUEUE"
-# queue = "speechtopics-email-enrollment"
+[[queues.producers]]
+binding = "EMAIL_ENROLLMENT_QUEUE"
+queue = "speechtopics-email-enrollment"
 
 # Bind a Queue consumer. Queue Consumers can retrieve tasks scheduled by Producers to act on them.
 # Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#queues
