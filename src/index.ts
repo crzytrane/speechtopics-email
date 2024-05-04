@@ -88,7 +88,7 @@ export default {
 					return new Response('Missing email or code', { status: 400 });
 				}
 
-				await env.EMAIL_ENROLLMENT_QUEUE.send({
+				await env.EMAIL_QUEUE.send({
 					type: 'subscribe',
 					email,
 					code
@@ -105,7 +105,7 @@ export default {
 					return new Response('Missing email, code or topic', { status: 400 });
 				}
 
-				await env.EMAIL_ENROLLMENT_QUEUE.send({
+				await env.EMAIL_QUEUE.send({
 					type: 'dailytopic',
 					email,
 					code,
