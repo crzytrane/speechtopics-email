@@ -28,12 +28,10 @@ const createSubscriptionEmailCommand = (input: {toAddress: string, fromAddress: 
 
 const createDailySpeechTopicEmailCommand = (input: {toAddress: string, fromAddress: string, code: string, topic: string}) => {
 	const { toAddress, fromAddress, code, topic } = input;
-	const currentDate = new Date();
-	const formattedDate = formatDate(currentDate);
 	return createEmailCommand({
 		fromAddress,
 		toAddress,
-		subject: `Daily speech topic - ${formattedDate}`,
+		subject: `Daily speech topic`,
 		htmlBody: `<h3>Speech topic of the day</h3><p>${topic}</p><a href="https://speechtopics.markhamilton.dev">More speech topics</a>&nbsp;or&nbsp;<a href="https://speechtopics.markhamilton.dev/mailinglist/unsubscribe?email=${toAddress}&code=${code}">Unsubscribe</a>`,
 		textBody: `Speech topic of the day\n\n${topic}\n\nMore topics - https://speechtopics.markhamilton.dev\nUnsubscribe - https://speechtopics.markhamilton.dev/mailinglist/unsubscribe?email=${toAddress}&code=${code}`
 	})
@@ -59,8 +57,7 @@ const createEmailCommand = (input: CreateEmailCommand) => {
 			},
 			Subject: {
 				Charset: "UTF-8",
-				//Data: subject,
-				Data: `${toAddress} - ${subject}`,
+				Data: subject,
 			},
 		},
 		Source: fromAddress,
@@ -75,6 +72,22 @@ type QueueMessages =
 
 
 export default {
+	async scheduled(event: ScheduledEvent, env: Env, ctx: ExecutionContext) {
+		const row = await env.DB.prepare('select * from MailingList where confirmed = 1').all()
+		const request = await fetch('https://speechtopics.markhamilton.dev/api')
+		const topic = await request.text()
+
+		const results = row.results.map(async (element) => {
+			return await env.EMAIL_QUEUE.send({
+				type: 'dailytopic',
+				email: element.email,
+				code: element.code,
+				topic: topic
+			})}
+		);
+
+		ctx.waitUntil(Promise.all(results));
+	},
 	async fetch(req: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
 		const { pathname } = new URL(req.url);
 		const url = new URL(req.url);

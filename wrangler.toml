@@ -35,5 +35,13 @@ queue = "speechtopics-email"
 # max_retries = 10
 # dead_letter_queue = "my-queue-dlq"
 
+[[d1_databases]]
+binding = "DB"
+database_name = "speechtopics"
+database_id = "2ecc3066-ce72-494d-b828-6b668cf796ec"
+
 [vars]
 AWS_REGION = "ap-southeast-2"
+
+[triggers]
+crons = [ "0 18 * * *"]
