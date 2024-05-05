@@ -3,7 +3,6 @@ run-name: ${{ github.actor }} is deploying to prod 🚀
 on:
   push:
     branches: [main]
-
 jobs:
   deploy-to-cloudflare:
     runs-on: ubuntu-latest
@@ -14,8 +13,6 @@ jobs:
       - uses: oven-sh/setup-bun@v1
         with:
           bun-version: latest
-      - run: echo "🚀 Bun is now installed on the runner"
       - run: bun install
       - run: bun run deploy
-      - run: echo "🔎 Branch is ${{ github.ref }} Repository is ${{ github.repository }}"
       - run: echo "🍏 This job's status is ${{ job.status }}"
