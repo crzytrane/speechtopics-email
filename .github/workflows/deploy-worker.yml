@@ -6,7 +6,11 @@ on:
     branches: [main]
 
 jobs:
+
   deploy-to-cloudflare:
+    uses: oven-sh/setup-bun@v1
+    with:
+      bun-version: latest
     runs-on: ubuntu-latest
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
