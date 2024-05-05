@@ -10,6 +10,7 @@ jobs:
   deploy-to-cloudflare:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v1
         with:
           bun-version: latest
