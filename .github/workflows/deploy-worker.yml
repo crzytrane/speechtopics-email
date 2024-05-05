@@ -9,6 +9,8 @@ jobs:
 
   deploy-to-cloudflare:
     runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v1
