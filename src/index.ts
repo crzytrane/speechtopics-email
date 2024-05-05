@@ -1,11 +1,11 @@
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 
-function formatDate(date: Date) {
+/*function formatDate(date: Date) {
 	const day = date.getDate();
 	const month = date.toLocaleString('default', { month: 'long' });
 	const suffix = (day === 1 || day === 21 || day === 31) ? 'st' : (day === 2 || day === 22) ? 'nd' : (day === 3 || day === 23) ? 'rd' : 'th';
 	return `${day}${suffix} ${month}`;
-}
+}*/
 
 type CreateEmailCommand = {
 	toAddress: string;
@@ -88,7 +88,7 @@ export default {
 
 		ctx.waitUntil(Promise.all(results));
 	},
-	async fetch(req: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+	/*async fetch(req: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
 		const { pathname } = new URL(req.url);
 		const url = new URL(req.url);
 
@@ -130,7 +130,7 @@ export default {
 			default:
 				return new Response('Unknown path', { status: 404 });
 		}
-	},
+	},*/
 
 	async queue(batch: MessageBatch<QueueMessages>, env: Env): Promise<void> {
 		const sesClient = new SESClient({
