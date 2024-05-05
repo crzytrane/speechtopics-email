@@ -1,7 +1,6 @@
 name: 🌩️ Deploy Worker
 run-name: ${{ github.actor }} is deploying to prod 🚀
 on:
-  workflow_dispatch:
   push:
     branches: [main]
 
@@ -16,8 +15,8 @@ jobs:
       - uses: oven-sh/setup-bun@v1
         with:
           bun-version: latest
-      - run: echo "🚀 Bun is now installed on the runner."
+      - run: echo "🚀 Bun is now installed on the runner"
       - run: bun install
       - run: bun run deploy
-      - run: echo "🔎 Branch is ${{ github.ref }} Repository is ${{ github.repository }}."
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+      - run: echo "🔎 Branch is ${{ github.ref }} Repository is ${{ github.repository }}"
+      - run: echo "🍏 This job's status is ${{ job.status }}"
