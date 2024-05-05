@@ -13,7 +13,7 @@ jobs:
       - uses: oven-sh/setup-bun@v1
         with:
           bun-version: latest
-        run: echo "🚀 Bun is now installed on the runner."
+      - run: echo "🚀 Bun is now installed on the runner."
       - run: bun install
 
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
