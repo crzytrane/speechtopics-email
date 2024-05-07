@@ -20,7 +20,7 @@ const createSubscriptionEmailCommand = (input: {toAddress: string, fromAddress: 
 	return createEmailCommand({
 		fromAddress,
 		toAddress,
-		subject: `Daily speech topic - Verification code`,
+		subject: `Daily speech topic - Verify your email`,
 		htmlBody: `<h3>Speech topic email verification</h3><a href="https://speechtopics.markhamilton.dev/mailinglist/verify?email=${toAddress}&code=${code}">Click here to verify</a><br><br><a href="https://speechtopics.markhamilton.dev">More speech topics</a>&nbsp;or&nbsp;<a href="https://speechtopics.markhamilton.dev/mailinglist/unsubscribe?email=${toAddress}&code=${code}">Unsubscribe</a>`,
 		textBody: `Speech topic email verification\n\nNavigate here to verify your email https://speechtopics.markhamilton.dev/subscribe?email=${toAddress}&code=${code}\n\nUnsubscribe: https://speechtopics.markhamilton.dev`
 	})
