@@ -42,6 +42,7 @@ database_id = "2ecc3066-ce72-494d-b828-6b668cf796ec"
 
 [vars]
 AWS_REGION = "ap-southeast-2"
+SMTP_FROM = "daily@speechtopics.markhamilton.dev"
 
 [triggers]
 crons = [ "0 18 * * *"]
