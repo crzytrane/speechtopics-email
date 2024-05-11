@@ -1,12 +1,5 @@
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 
-/*function formatDate(date: Date) {
-	const day = date.getDate();
-	const month = date.toLocaleString('default', { month: 'long' });
-	const suffix = (day === 1 || day === 21 || day === 31) ? 'st' : (day === 2 || day === 22) ? 'nd' : (day === 3 || day === 23) ? 'rd' : 'th';
-	return `${day}${suffix} ${month}`;
-}*/
-
 type CreateEmailCommand = {
 	toAddress: string;
 	fromAddress: string;
@@ -74,7 +67,18 @@ type QueueMessages =
 export default {
 	async scheduled(event: ScheduledEvent, env: Env, ctx: ExecutionContext) {
 		const row = await env.DB.prepare('select * from MailingList where confirmed = 1').all()
-		const request = await fetch('https://speechtopics.markhamilton.dev/api')
+		let request = await fetch('https://speechtopics.markhamilton.dev/api')
+		let attempts = 0;
+
+		while (attempts <= 3 && !request.ok) {
+			request = await fetch('https://speechtopics.markhamilton.dev/api')
+			attempts++;
+
+			if (attempts === 3) {
+				return new Response('Failed to fetch topics', { status: 500 });
+			}
+		}
+
 		const topic = await request.text()
 
 		const results = row.results.map(async (element) => {
