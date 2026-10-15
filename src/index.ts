@@ -81,7 +81,17 @@ export default {
 
 		const topic = await request.text()
 
-		const results = row.results.map(async (element) => {
+		const sentEmails = new Set<string>();
+		const recipients = row.results.filter((element) => {
+			const normalizedEmail = element.email.trim().toLowerCase();
+			if (sentEmails.has(normalizedEmail)) {
+				return false;
+			}
+			sentEmails.add(normalizedEmail);
+			return true;
+		});
+
+		const results = recipients.map(async (element) => {
 			return await env.EMAIL_QUEUE.send({
 				type: 'dailytopic',
 				email: element.email,
